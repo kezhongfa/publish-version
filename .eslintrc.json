@@ -1,0 +1,14 @@
+{
+  "extends": ["eslint-config-kzf/typescript"],
+  "ignorePatterns": ["node_modules", "dist", "commitlint.config.js", "tsconfig.json", "scripts", "bin"],
+  "rules": {
+    "no-console": "off",
+    "import/prefer-default-export": "off",
+    "no-magic-numbers": "off",
+    "dot-notation": "off",
+    "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "no-return-await": "off",
+    "@typescript-eslint/ban-types": "off"
+  }
+}

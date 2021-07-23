@@ -1,0 +1,35 @@
+{
+  "git": {
+    "skipCheck": false,
+    "requireCleanWorkingDir": true,
+    "requireBranch": null,
+    "addUntrackedFiles": true,
+    "commit": true,
+    "commitMessage": "version ${version}",
+    "commitArgs": ["--no-verify"],
+    "tag": true,
+    "tagName": "v${version}",
+    "tagMessage": "version ${version}",
+    "tagArgs": [],
+    "push": true,
+    "pushArgs": ["--follow-tags"],
+    "changelog": null
+  },
+  "npm": {
+    "skipCheck": false,
+    "publish": true,
+    "publishPath": ".",
+    "tag": null,
+    "registry": "https://registry.npmjs.org",
+    "timeout": 40,
+    "publishArgs": []
+  },
+  "hooks": {
+    "beforeStart": null,
+    "afterStart": null,
+    "beforeVersion": null,
+    "afterVersion": null,
+    "beforePublish": null,
+    "afterPublish": null
+  }
+}

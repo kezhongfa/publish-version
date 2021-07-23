@@ -1,0 +1,106 @@
+{
+  "name": "publish-version",
+  "version": "0.0.5",
+  "description": "A CLI to automate versioning and package publishing tasks",
+  "main": "index.js",
+  "bin": {
+    "pv": "./bin/www"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "node ./scripts/build.js",
+    "release": "npm run build && node ./dist/bin/www --no-git.requireCleanWorkingDir",
+    "codecheck": "npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\"",
+    "codecheck:fix": "npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\" --fix",
+    "test": "node ./dist/bin/www --no-git",
+    "test:debug": "cross-env DEBUG=* node ./dist/bin/www --no-git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo '执行代码检测:' && lint-staged",
+      "commit-msg": "echo '执行git提交信息格式检测:' && commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint -c .eslintrc.json --fix",
+      "git add ."
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kezhongfa/publish-version.git"
+  },
+  "keywords": [
+    "publish",
+    "version",
+    "release",
+    "changelog"
+  ],
+  "author": "kzf",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.2",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@types/debug": "^4.1.5",
+    "@types/git-url-parse": "^9.0.0",
+    "@types/inquirer": "^7.3.2",
+    "@types/lodash": "^4.14.170",
+    "@types/rimraf": "^3.0.0",
+    "@types/semver": "^7.3.6",
+    "@types/shelljs": "^0.8.8",
+    "@types/update-notifier": "^5.0.0",
+    "colors": "^1.4.0",
+    "commitlint-config-fa": "^1.0.5",
+    "cross-env": "^7.0.3",
+    "eslint-config-kzf": "^0.1.2",
+    "husky": "^4.3.8",
+    "lint-staged": "^11.0.0",
+    "rollup": "^2.41.1",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "cosmiconfig": "^7.0.0",
+    "debug": "^4.3.1",
+    "git-url-parse": "^11.5.0",
+    "inquirer": "^8.1.1",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.5",
+    "ora": "^5.4.1",
+    "parse-json": "^5.2.0",
+    "rimraf": "^3.0.2",
+    "semver": "^7.3.5",
+    "shelljs": "^0.8.4",
+    "update-notifier": "^5.1.0",
+    "yaml": "^1.10.2"
+  },
+  "publish-version": {
+    "git": {
+      "changelog": "npx auto-changelog --commit-limit false",
+      "requireBranch": "master"
+    },
+    "npm": {
+      "publishPath": "dist"
+    },
+    "hooks": {
+      "beforeStart": "echo beforeStart",
+      "afterStart": "echo afterStart",
+      "beforeVersion": "echo ${name} current version ${latestVersion}",
+      "afterVersion": "npx auto-changelog -p && node ./scripts/after-version.js",
+      "beforePublish": "echo before publish ${name} v${version}.",
+      "afterPublish": "echo after publish ${name} v${version} to ${repo.repository}."
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}
