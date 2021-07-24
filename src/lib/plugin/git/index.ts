@@ -56,7 +56,7 @@ class Git extends BasePlugin<IGitOptions, IGitContextOptions> {
   }
 
   async getLatestTag() {
-    return await this.shell.exec('git describe --tags --abbrev=0');
+    return await this.shell.exec('git describe --tags --abbrev=0').catch(() => null);
   }
 
   isGitRepo() {

@@ -113,7 +113,7 @@ publish-version --only-changelog
 
 ## 默认值配置
 
-项目有[默认配置](/kezhongfa/publish-version/blob/master/src/config/publish-version.json)
+项目有[默认配置](./src/config/publish-version.json)
 
 我们可以通过设置,覆盖默认配置
 

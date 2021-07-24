@@ -7,7 +7,7 @@ class BaseError extends Error {
 
 export class GitRepoError extends BaseError {
   constructor() {
-    super('The current directory is not (inside) a Git repository. Use `--no.git` to skip Git steps.');
+    super('The current directory is not (inside) a Git repository. Use `--no-git` to skip Git steps.');
   }
 }
 
