@@ -94,7 +94,7 @@
       "beforeStart": "echo beforeStart",
       "afterStart": "echo afterStart",
       "beforeVersion": "echo ${name} current version ${latestVersion}",
-      "afterVersion": "npx auto-changelog -p && node ./scripts/after-version.js",
+      "afterVersion": "npx auto-changelog -p && npm run build",
       "beforePublish": "echo before publish ${name} v${version}.",
       "afterPublish": "echo after publish ${name} v${version} to ${repo.repository}."
     }
