@@ -30,9 +30,8 @@ npm install publish-version -D
 
 ```bash
 npm install publish-version -g
-// 使用
-npx pv
-
+npx pv // 使用
+npx pv --help // 显示帮助
 ```
 
 ## 使用
@@ -70,7 +69,7 @@ publish-version premajor --preReleaseId=beta --npm.tag=beta // 1.0.0-beta.0
 
 ```bash
 publish-version --no-npm.skipCheck // no check(eg:用户是否是包合作者,用户是否登录,registry是否可用等)
-publish-version --no-git.publish  // no publish
+publish-version --no-npm.publish  // no publish
 publish-version --no-npm // no check,publish
 
 ```
