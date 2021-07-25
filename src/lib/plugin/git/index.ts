@@ -43,7 +43,7 @@ class Git extends BasePlugin<IGitOptions, IGitContextOptions> {
     }
     this.config.setContext({ repo: parseGitUrl(this.remoteUrl) });
 
-    await this.fetch();
+    // await this.fetch();
     const latestTag = await this.getLatestTag();
     this.config.setContext({ latestTag });
   }
