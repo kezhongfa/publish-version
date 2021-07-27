@@ -44,7 +44,7 @@ class npm extends BasePlugin<INpmOptions, INpmContextOptions> {
 
   get registryArg() {
     const registry = this.getRegistry();
-    return registry !== NPM_DEFAULT_REGISTRY ? ` --registry ${registry}` : '';
+    return ` --registry ${registry}`;
   }
 
   isAuthenticated() {
@@ -117,7 +117,7 @@ class npm extends BasePlugin<INpmOptions, INpmContextOptions> {
   }
 
   getRegistryPreReleaseTags() {
-    return this.shell.exec(`npm view ${this.getName()} dist-tags --json`).then(
+    return this.shell.exec(`npm view ${this.getName()} dist-tags --json${this.registryArg}`).then(
       output => {
         try {
           const tags = JSON.parse(output);
@@ -181,7 +181,7 @@ class npm extends BasePlugin<INpmOptions, INpmContextOptions> {
       this.log.warn('Skip publish: package is private.');
       return false;
     }
-    const args = [publishPath, `--tag ${tag}`, ...fixArgs(publishArgs)].filter(Boolean);
+    const args = [publishPath, `--tag ${tag}`, ...fixArgs(publishArgs), this.registryArg].filter(Boolean);
     return this.shell
       .exec(`npm publish ${args.join(' ')}`)!
       .then(() => {
