@@ -159,8 +159,8 @@ repo.remote, repo.protocol, repo.host, repo.owner, repo.repository, repo.project
 | afterStart    |  npm,git 检查后 |
 | beforeVersion | 更新 version 前 |
 | afterVersion  | 更新 version 后 |
-| beforePublish |          发布前 |
-| afterPublish  |          发布后 |
+| beforePublish |      publish 前 |
+| afterPublish  |      publish 后 |
 
 ```js
 {
@@ -168,7 +168,7 @@ repo.remote, repo.protocol, repo.host, repo.owner, repo.repository, repo.project
     "beforeStart": "npm run codecheck",
     "afterStart": "echo afterStart",
     "beforeVersion": "echo ${name} current version ${latestVersion}",
-    "afterVersion": "npx auto-changelog",
+    "afterVersion": "npx auto-changelog -p",
  "beforePublish": "echo before publish ${name} v${version}.",
     "afterPublish": "echo after publish ${name} v${version} to ${repo.repository}."
   }

@@ -1,5 +1,5 @@
 const shell = require('shelljs');
-const colors = require('colors');
+const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 
@@ -32,7 +32,7 @@ execBuildTask()
   .then(execShellTask)
   .then(execPackageJsonTask)
   .catch(err => {
-    console.log(colors.red(err));
+    console.log(chalk.red(err));
     process.exit(1);
   });
 
