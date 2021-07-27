@@ -91,6 +91,21 @@ publish-version --no-increment
 
 ```
 
+### changelog
+
+自定义配置
+
+```js
+{
+"git": {
+    "changelog": "npx auto-changelog --commit-limit false" //or npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0
+  },
+  "hooks": {
+      "afterVersion": "npx auto-changelog -p" //or npx conventional-changelog-cli -p angular -i CHANGELOG.md -s
+    }
+}
+```
+
 ### only changelog(仅更新 changelog)
 
 ```bash
@@ -102,11 +117,8 @@ publish-version --only-changelog
 ```js
 {
 "git": {
-    "changelog": "npx auto-changelog --commit-limit false"
-  },
-  "hooks": {
-      "afterVersion": "npx auto-changelog -p"
-    }
+    "changelog": "npx auto-changelog --commit-limit false" //or npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0
+  }
 }
 ```
 
