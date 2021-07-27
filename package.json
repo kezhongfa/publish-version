@@ -1,6 +1,6 @@
 {
   "name": "publish-version",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A CLI to automate versioning and package publishing tasks",
   "main": "index.js",
   "bin": {
