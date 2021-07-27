@@ -1,6 +1,6 @@
 {
   "name": "publish-version",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "A CLI to automate versioning and package publishing tasks",
   "main": "index.js",
   "bin": {
@@ -10,13 +10,13 @@
     "node": ">=10"
   },
   "scripts": {
+    "release": "npm run codecheck && npm run build && node ./dist/bin/www --no-git.requireCleanWorkingDir",
+    "test:debug": "cross-env DEBUG=* node ./dist/bin/www --no-git.requireCleanWorkingDir",
+    "test": "node ./dist/bin/www --no-git.requireCleanWorkingDir",
     "clean": "rimraf ./dist",
     "build": "node ./scripts/build.js",
-    "release": "npm run build && node ./dist/bin/www --no-git.requireCleanWorkingDir",
     "codecheck": "npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\"",
-    "codecheck:fix": "npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\" --fix",
-    "test": "node ./dist/bin/www --no-git.requireCleanWorkingDir",
-    "test:debug": "cross-env DEBUG=* node ./dist/bin/www --no-git.requireCleanWorkingDir"
+    "codecheck:fix": "npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
   "husky": {
     "hooks": {
