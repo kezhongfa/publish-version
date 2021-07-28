@@ -4,7 +4,7 @@
   "description": "A CLI to automate versioning and package publishing tasks",
   "main": "index.js",
   "bin": {
-    "pv": "./bin/www"
+    "publish-version": "./bin/www"
   },
   "engines": {
     "node": ">=10"

@@ -30,8 +30,8 @@ npm install publish-version -D
 
 ```bash
 npm install publish-version -g
-npx pv // 使用
-npx pv --help // 显示帮助
+npx publish-version // 使用
+npx publish-version --help // 显示帮助
 ```
 
 ## 使用
