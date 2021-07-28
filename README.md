@@ -65,6 +65,43 @@ publish-version premajor --preReleaseId=beta --npm.tag=beta // 1.0.0-beta.0
 
 ```
 
+### 发布私有的包
+
+1. 如果你在 package.json 中设置了 "private": true，那么 npm 将拒绝发布它
+2. @npm/package-name 这种形式的包名，是有作用域的包名形式，执行 npm publish 的时候默认是发布私有的包。
+
+这是一种防止意外发布私有存储库的方法。如果您想发布私有的包(优先级:scripts>自定义配置>package.json)
+
+scripts
+
+```js
+{
+  ...
+  "scripts": {
+    "release": "publish-version --npm.access=public"
+  }
+  ...
+}
+```
+
+自定义配置
+
+```js
+{
+"npm": {
+    "access": "public"
+  }
+}
+```
+
+package.json
+
+```json
+ "publishConfig": {
+    "access": "public"
+  }
+```
+
 ### no publish(不发布)
 
 ```bash
