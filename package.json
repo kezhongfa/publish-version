@@ -15,8 +15,9 @@
     "test": "node ./dist/bin/www --no-git.requireCleanWorkingDir",
     "clean": "rimraf ./dist",
     "build": "node ./scripts/build.js",
-    "codecheck": "npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\"",
-    "codecheck:fix": "npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\" --fix"
+    "ts-check": "tsc --noEmit",
+    "codecheck": "npm run ts-check && npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\"",
+    "codecheck:fix": "npm run ts-check && npx eslint -c .eslintrc.json \"src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
   "husky": {
     "hooks": {
@@ -26,7 +27,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint -c .eslintrc.json --fix",
+      "npm run codecheck:fix",
       "git add ."
     ]
   },
