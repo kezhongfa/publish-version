@@ -21,7 +21,8 @@
     "publishPath": ".",
     "tag": null,
     "registry": "https://registry.npmjs.org",
-    "timeout": 40,
+    "access": null,
+    "timeout": 60,
     "publishArgs": []
   },
   "hooks": {

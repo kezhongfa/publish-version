@@ -175,10 +175,6 @@ class Config {
   get isUpdate() {
     return this.options.increment === false;
   }
-
-  get isOnlyChangelog() {
-    return this.options['only-changelog'];
-  }
 }
 
 export default Config;

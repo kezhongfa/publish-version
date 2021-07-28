@@ -22,8 +22,10 @@ export enum ENamespace {
   version = 'version',
 }
 
+export type TAccess = 'public' | 'restricted';
 export interface IPublishConfig {
   registry?: string;
+  access?: TAccess;
 }
 
 export interface IGitRepo {
@@ -69,6 +71,7 @@ export interface INpmOptions {
   publishPath: string;
   tag?: string | null | number;
   registry: string | null;
+  access: TAccess | null;
   timeout: number;
   publishArgs: string[];
 }

@@ -1,6 +1,6 @@
 import semver from 'semver';
 import { get } from 'lodash';
-import { ENamespace, INpmContextOptions, INpmOptions, TContainer } from '../../../type';
+import { ENamespace, INpmContextOptions, INpmOptions, TAccess, TContainer } from '../../../type';
 import { CollaboratorError, NpmAuthError, NpmTimeoutError } from '../../errors';
 import { fixArgs, parseVersion, rejectAfter } from '@/helpers';
 import { prompts } from './prompts';
@@ -15,8 +15,7 @@ class npm extends BasePlugin<INpmOptions, INpmContextOptions> {
 
   async validate() {
     const { publish, latestVersion: version, private: isPrivate, skipCheck } = this.options;
-    if (skipCheck || !publish || isPrivate) return;
-
+    if (skipCheck || !publish || (isPrivate && this.access !== 'public')) return;
     const timeout = Number(this.options.timeout) * 1000;
     const validations = Promise.all([this.isRegistryOk(), this.isAuthenticated(), this.getLatestVersion()]);
     await Promise.race([validations, rejectAfter(timeout)]).catch(() => {
@@ -40,11 +39,6 @@ class npm extends BasePlugin<INpmOptions, INpmContextOptions> {
     } else if (!semver.eq(latestVersion, version!)) {
       this.log.warn(`Latest version in registry (${latestVersion}) does not match package.json (${version}).`);
     }
-  }
-
-  get registryArg() {
-    const registry = this.getRegistry();
-    return ` --registry ${registry}`;
   }
 
   isAuthenticated() {
@@ -108,8 +102,23 @@ class npm extends BasePlugin<INpmOptions, INpmContextOptions> {
     }
   }
 
+  get access(): TAccess | undefined {
+    const access = get(this.options, 'access');
+    const pAccess = get(this.options, 'publishConfig.access');
+    return access || pAccess;
+  }
+
+  get accessArg() {
+    return this.access ? ` --access ${this.access}` : ' ';
+  }
+
   getRegistry() {
     return get(this.options, 'registry', get(this.options, 'publishConfig.registry', NPM_DEFAULT_REGISTRY));
+  }
+
+  get registryArg() {
+    const registry = this.getRegistry();
+    return ` --registry ${registry}`;
   }
 
   getName() {
@@ -177,13 +186,15 @@ class npm extends BasePlugin<INpmOptions, INpmContextOptions> {
     const { publishPath = '.', private: isPrivate, publishArgs } = this.options;
 
     const { tag = DEFAULT_TAG } = this.getContext();
-    if (isPrivate) {
+    if (isPrivate && this.access !== 'public') {
       this.log.warn('Skip publish: package is private.');
       return false;
     }
-    const args = [publishPath, `--tag ${tag}`, ...fixArgs(publishArgs), this.registryArg].filter(Boolean);
+    const args = [publishPath, `--tag ${tag}`, ...fixArgs(publishArgs), this.accessArg, this.registryArg].filter(
+      Boolean,
+    );
     return this.shell
-      .exec(`npm publish ${args.join(' ')}`)!
+      .exec(`npm publish ${args.join(' ')}`)
       .then(() => {
         this.setContext({ isPublished: true });
       })

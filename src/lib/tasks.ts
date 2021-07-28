@@ -36,17 +36,17 @@ export const runTasks = async (o: PartialDeep<IOptions>) => {
 
     const options = config.getContext();
     const { hooks } = options;
-    const { beforeStart, afterStart, beforeVersion, afterVersion, beforePublish, afterPublish } = hooks!;
+    const { beforeStart, afterStart, beforeVersion, afterVersion, beforePublish, afterPublish } = hooks;
 
     // beforeStart;
-    await runScripts(beforeStart!);
+    await runScripts(beforeStart);
 
     const gitPlugin = new Git({ container, namespace: ENamespace.git });
     const npmPlugin = new Npm({ container, namespace: ENamespace.npm });
     const versionPlugin = new Version({ container, namespace: ENamespace.version });
     await Promise.all([gitPlugin.validate(), npmPlugin.validate()]);
     // afterStart;
-    await runScripts(afterStart!);
+    await runScripts(afterStart);
     // changelog
     await gitPlugin.changelog();
     const { increment, isPreRelease, preReleaseId } = options.version;
@@ -65,20 +65,19 @@ export const runTasks = async (o: PartialDeep<IOptions>) => {
       version = await versionPlugin.getIncrementedVersion(incrementBase);
     }
     config.setContext({ latestVersion, name, ...parseVersion(version) });
-    // console.log('version:', version, parseVersion(version), config.getContext());
     // beforeVersion;
-    await runScripts(beforeVersion!);
+    await runScripts(beforeVersion);
     await npmPlugin.bump(version as string);
     // afterVersion;
-    await runScripts(afterVersion!);
+    await runScripts(afterVersion);
     // beforePublish;
-    await runScripts(beforePublish!);
+    await runScripts(beforePublish);
     await gitPlugin.beforePublish();
     // publish;
     await npmPlugin.publish();
     await gitPlugin.publish();
     // afterPublish;
-    await runScripts(afterPublish!);
+    await runScripts(afterPublish);
 
     container.log.log(`Done (in ${Math.floor(process.uptime())}s.)`);
   } catch (err) {
