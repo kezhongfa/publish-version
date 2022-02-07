@@ -1,6 +1,6 @@
 {
   "name": "publish-version",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A CLI to automate versioning and package publishing tasks",
   "main": "index.js",
   "bin": {
@@ -89,7 +89,8 @@
       "requireBranch": "master"
     },
     "npm": {
-      "publishPath": "dist"
+      "publishPath": "dist",
+      "registry": "http://81.68.72.219:3001/"
     },
     "hooks": {
       "beforeStart": "echo beforeStart",
@@ -101,7 +102,7 @@
     }
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
+    "registry": "http://81.68.72.219:3001/",
     "access": "public"
   }
 }
